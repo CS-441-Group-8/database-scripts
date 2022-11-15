@@ -74,7 +74,7 @@ insert into transaction (transaction_id, date, salesperson_id, total, discount, 
 
 -- ON CASCADE DELETE CASCADE means that if a row in the parent table is deleted, then all the rows in the child table that reference that row in the parent table are also deleted.
 create table transaction_discount (
-	transaction_id INT REFERENCES transaction(transaction_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	transaction_id BIGSERIAL REFERENCES transaction(transaction_id) ON UPDATE CASCADE ON DELETE CASCADE,
 	discount_id INT REFERENCES discount(discount_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
