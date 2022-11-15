@@ -1,9 +1,11 @@
 -- Warning: if you run this script, your "development" table will be overwritten
 -- If development already exists, delete it first
-DROP TABLE IF EXISTS development;
+DROP DATABASE IF EXISTS development;
 
-create database if not exists development;
+CREATE DATABASE development;
 
+-- Use the database
+\c development;
 
 create table employee (
 	user_id BIGSERIAL NOT NULL PRIMARY KEY,
@@ -43,30 +45,6 @@ insert into product (sku, title, brand, summary, price, quantity, category, crea
 insert into product (sku, title, brand, summary, price, quantity, category, creator, creation_date, supplier) values ('32-885-9424', 'Bread', 'Wonder Bread', 'Feed Your Joy. ', 2.89, 95, 'Food', 2, '7/27/2022', 'Avamm');
 insert into product (sku, title, brand, summary, price, quantity, category, creator, creation_date, supplier) values ('78-736-0229', 'Superstar', 'Adidas', 'Originally made for basketball courts in the 70s.', 67.00, 62, 'Shoes', 4, '10/17/2022', 'Roodel');
 
-create table transaction (
-	transaction_id BIGSERIAL NOT NULL PRIMARY KEY,
-	date VARCHAR(50) NOT NULL,
-	salesperson_id INT NOT NULL,
-	total DECIMAL(5,2) NOT NULL,
-	discount_type VARCHAR(50) NOT NULL,
-	discount DECIMAL(4,2) NOT NULL,
-	final_total DECIMAL(5,2) NOT NULL,
-	payment_type VARCHAR(50) NOT NULL,
-	creditcard_type VARCHAR(64),
-	creditcard_number VARCHAR(64),
-	creditcard_expiration VARCHAR(64)
-);
-insert into transaction (transaction_id, date, salesperson_id, total, discount_type, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (1, '2021-10-19 14:21:55', 2, 99.99, 'NONE', 0.00, 99.99, 'CASH', 'NA', 'NA', '4/19/2022');
-insert into transaction (transaction_id, date, salesperson_id, total, discount_type, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (2, '2021-10-19 12:11:32', 1, 131.16, 'FRIENDS', 6.56, 124.60, 'CARD', 'americanexpress', '374288515952579', '11/17/2022');
-insert into transaction (transaction_id, date, salesperson_id, total, discount_type, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (3, '2021-10-21 10:33:11', 14, 2.99, 'MILITARY', 0.30, 2.69, 'CARD', 'americanexpress', '374283762303196', '2/4/2023');
-insert into transaction (transaction_id, date, salesperson_id, total, discount_type, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (4, '2021-10-23 15:19:19', 8, 2.89, 'NONE', 0.00, 2.89, 'CARD', 'mastercard', '5108750770479970', '3/9/2023');
-insert into transaction (transaction_id, date, salesperson_id, total, discount_type, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (5, '2021-10-23 11:16:63', 12, 67.00, 'FRIENDS', 3.35, 63.65, 'CASH', 'NA', 'NA', '5/26/2023');
-
-create table transaction_items (
-    transaction_id INT REFERENCES transaction(transaction_id) ON UPDATE CASCADE ON DELETE CASCADE,
-    sku VARCHAR(50) REFERENCES product(sku) ON UPDATE CASCADE ON DELETE CASCADE,
-    quantity INT );
-
 create table discount (
 	discount_id INT NOT NULL PRIMARY KEY,
 	discount_type VARCHAR(50),
@@ -75,3 +53,33 @@ create table discount (
 insert into discount (discount_id, discount_type, amount) values (1, 'Friends', 0.05);
 insert into discount (discount_id, discount_type, amount) values (2, 'Family', 0.15);
 insert into discount (discount_id, discount_type, amount) values (3, 'Military', 0.10);
+
+create table transaction (
+	transaction_id BIGSERIAL NOT NULL PRIMARY KEY,
+	date VARCHAR(50) NOT NULL,
+	salesperson_id INT NOT NULL,
+	total DECIMAL(5,2) NOT NULL,
+	discount DECIMAL(4,2) NOT NULL,
+	final_total DECIMAL(5,2) NOT NULL,
+	payment_type VARCHAR(50) NOT NULL,
+	creditcard_type VARCHAR(64),
+	creditcard_number VARCHAR(64),
+	creditcard_expiration VARCHAR(64)
+);
+insert into transaction (transaction_id, date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (1, '2021-10-19 14:21:55', 2, 99.99, 0.00, 99.99, 'CASH', 'NA', 'NA', '4/19/2022');
+insert into transaction (transaction_id, date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (2, '2021-10-19 12:11:32', 1, 131.16, 6.56, 124.60, 'CARD', 'americanexpress', '374288515952579', '11/17/2022');
+insert into transaction (transaction_id, date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (3, '2021-10-21 10:33:11', 14, 2.99, 0.30, 2.69, 'CARD', 'americanexpress', '374283762303196', '2/4/2023');
+insert into transaction (transaction_id, date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (4, '2021-10-23 15:19:19', 8, 2.89, 0.00, 2.89, 'CARD', 'mastercard', '5108750770479970', '3/9/2023');
+insert into transaction (transaction_id, date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (5, '2021-10-23 11:16:63', 12, 67.00, 3.35, 63.65, 'CASH', 'NA', 'NA', '5/26/2023');
+
+-- ON CASCADE DELETE CASCADE means that if a row in the parent table is deleted, then all the rows in the child table that reference that row in the parent table are also deleted.
+create table transaction_discount (
+	transaction_id INT REFERENCES transaction(transaction_id) ON UPDATE CASCADE ON DELETE CASCADE,
+	discount_id INT REFERENCES discount(discount_id) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+create table transaction_items (
+    transaction_id INT REFERENCES transaction(transaction_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    sku VARCHAR(50) REFERENCES product(sku) ON UPDATE CASCADE ON DELETE CASCADE,
+    quantity INT 
+);
