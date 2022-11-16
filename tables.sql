@@ -8,7 +8,7 @@ CREATE DATABASE development;
 \c development;
 
 create table employee (
-	user_id BIGSERIAL NOT NULL PRIMARY KEY,
+	id BIGSERIAL NOT NULL PRIMARY KEY,
 	first_name VARCHAR(50) NOT NULL,
 	last_name VARCHAR(50) NOT NULL,
 	phone_number VARCHAR(50) NOT NULL,
@@ -21,11 +21,11 @@ create table employee (
 	hire_date DATE NOT NULL,
 	starting_amount FLOAT NOT NULL
 );
-insert into employee (user_id, first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values (1, 'Abner', 'Beardwell', '916-651-8952', 'abeardwell0@webs.com', '6 Dovetail Crossing', 'Sacramento', 'CA', '94237', 'TXFBV7w1Y0GI', '7/19/2022', 300.00);
-insert into employee (user_id, first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values (2, 'Gavin', 'Curness', '754-584-1871', 'gcurness1@twitpic.com', '1 Morningstar Place', 'Fort Lauderdale', 'FL', '33310', 'wVTpq9B', '12/3/2021', 300.00);
-insert into employee (user_id, first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values (3, 'Grier', 'Castellaccio', '319-376-1073', 'gcastellaccio2@github.com', '0 Pawling Street', 'Waterloo', 'IA', '50706', 'DICMpvtL0', '8/7/2022', 300.00);
-insert into employee (user_id, first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values (4, 'Bary', 'Portman', '651-250-8114', 'bportman3@simplemachines.org', '0 Summer Ridge Plaza', 'Saint Paul', 'MN', '55146', 'MjxZ6bBKq', '9/8/2022', 292.32);
-insert into employee (user_id, first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values (5, 'Gery', 'Elmes', '409-499-6540', 'gelmes4@cnet.com', '25 Carpenter Park', 'Galveston', 'TX', '77554', '428LJhxWhcB', '4/21/2022', 296.83);
+insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Abner', 'Beardwell', '916-651-8952', 'abeardwell0@webs.com', '6 Dovetail Crossing', 'Sacramento', 'CA', '94237', 'TXFBV7w1Y0GI', '7/19/2022', 300.00);
+insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Gavin', 'Curness', '754-584-1871', 'gcurness1@twitpic.com', '1 Morningstar Place', 'Fort Lauderdale', 'FL', '33310', 'wVTpq9B', '12/3/2021', 300.00);
+insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Grier', 'Castellaccio', '319-376-1073', 'gcastellaccio2@github.com', '0 Pawling Street', 'Waterloo', 'IA', '50706', 'DICMpvtL0', '8/7/2022', 300.00);
+insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Bary', 'Portman', '651-250-8114', 'bportman3@simplemachines.org', '0 Summer Ridge Plaza', 'Saint Paul', 'MN', '55146', 'MjxZ6bBKq', '9/8/2022', 292.32);
+insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Gery', 'Elmes', '409-499-6540', 'gelmes4@cnet.com', '25 Carpenter Park', 'Galveston', 'TX', '77554', '428LJhxWhcB', '4/21/2022', 296.83);
 
 create table product (
 	sku VARCHAR(50) NOT NULL PRIMARY KEY,
@@ -46,18 +46,18 @@ insert into product (sku, title, brand, summary, price, quantity, category, crea
 insert into product (sku, title, brand, summary, price, quantity, category, creator, creation_date, supplier) values ('78-736-0229', 'Superstar', 'Adidas', 'Originally made for basketball courts in the 70s.', 67.00, 62, 'Shoes', 4, '10/17/2022', 'Roodel');
 
 create table discount (
-	discount_id INT NOT NULL PRIMARY KEY,
+	id INT NOT NULL PRIMARY KEY,
 	discount_type VARCHAR(50),
 	amount DECIMAL(3,2)
 );
-insert into discount (discount_id, discount_type, amount) values (1, 'Friends', 0.05);
-insert into discount (discount_id, discount_type, amount) values (2, 'Family', 0.15);
-insert into discount (discount_id, discount_type, amount) values (3, 'Military', 0.10);
+insert into discount (id, discount_type, amount) values (1, 'Friends', 0.05);
+insert into discount (id, discount_type, amount) values (2, 'Family', 0.15);
+insert into discount (id, discount_type, amount) values (3, 'Military', 0.10);
 
 create table transaction (
-	transaction_id BIGSERIAL NOT NULL PRIMARY KEY,
+	id BIGSERIAL NOT NULL PRIMARY KEY,
 	date VARCHAR(50) NOT NULL,
-	salesperson_id INT NOT NULL,
+	salesperson_id INT NOT NULL REFERENCES employee(id),
 	total DECIMAL(5,2) NOT NULL,
 	discount DECIMAL(4,2) NOT NULL,
 	final_total DECIMAL(5,2) NOT NULL,
@@ -66,20 +66,20 @@ create table transaction (
 	creditcard_number VARCHAR(64),
 	creditcard_expiration VARCHAR(64)
 );
-insert into transaction (transaction_id, date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (1, '2021-10-19 14:21:55', 2, 99.99, 0.00, 99.99, 'CASH', 'NA', 'NA', '4/19/2022');
-insert into transaction (transaction_id, date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (2, '2021-10-19 12:11:32', 1, 131.16, 6.56, 124.60, 'CARD', 'americanexpress', '374288515952579', '11/17/2022');
-insert into transaction (transaction_id, date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (3, '2021-10-21 10:33:11', 14, 2.99, 0.30, 2.69, 'CARD', 'americanexpress', '374283762303196', '2/4/2023');
-insert into transaction (transaction_id, date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (4, '2021-10-23 15:19:19', 8, 2.89, 0.00, 2.89, 'CARD', 'mastercard', '5108750770479970', '3/9/2023');
-insert into transaction (transaction_id, date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values (5, '2021-10-23 11:16:63', 12, 67.00, 3.35, 63.65, 'CASH', 'NA', 'NA', '5/26/2023');
+insert into transaction (date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values ('2021-10-19 14:21:55', 2, 99.99, 0.00, 99.99, 'CASH', NULL, NULL, '4/19/2022');
+insert into transaction (date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values ('2021-10-19 12:11:32', 1, 131.16, 6.56, 124.60, 'CARD', 'americanexpress', '374288515952579', '11/17/2022');
+insert into transaction (date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values ('2021-10-21 10:33:11', 3, 2.99, 0.30, 2.69, 'CARD', 'americanexpress', '374283762303196', '2/4/2023');
+insert into transaction (date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values ('2021-10-23 15:19:19', 4, 2.89, 0.00, 2.89, 'CARD', 'mastercard', '5108750770479970', '3/9/2023');
+insert into transaction (date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values ('2021-10-23 11:16:63', 2, 67.00, 3.35, 63.65, 'CASH', NULL, NULL, '5/26/2023');
 
 -- ON CASCADE DELETE CASCADE means that if a row in the parent table is deleted, then all the rows in the child table that reference that row in the parent table are also deleted.
 create table transaction_discount (
-	transaction_id BIGSERIAL REFERENCES transaction(transaction_id) ON UPDATE CASCADE ON DELETE CASCADE,
-	discount_id INT REFERENCES discount(discount_id) ON UPDATE CASCADE ON DELETE CASCADE
+	transaction_id INT REFERENCES transaction(id) ON UPDATE CASCADE ON DELETE CASCADE,
+	discount_id INT REFERENCES discount(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 create table transaction_items (
-    transaction_id INT REFERENCES transaction(transaction_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    transaction_id INT REFERENCES transaction(id) ON UPDATE CASCADE ON DELETE CASCADE,
     sku VARCHAR(50) REFERENCES product(sku) ON UPDATE CASCADE ON DELETE CASCADE,
     quantity INT 
 );
