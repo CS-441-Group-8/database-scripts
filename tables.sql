@@ -73,7 +73,7 @@ insert into transaction (date, salesperson_id, total, discount, final_total, pay
 insert into transaction (date, salesperson_id, total, discount, final_total, payment_type, creditcard_type, creditcard_number, creditcard_expiration) values ('2021-10-23 11:16:63', 2, 67.00, 3.35, 63.65, 'CASH', NULL, NULL, '5/26/2023');
 
 -- ON CASCADE DELETE CASCADE means that if a row in the parent table is deleted, then all the rows in the child table that reference that row in the parent table are also deleted.
-create table transaction_discount (
+create table transaction_discounts (
 	transaction_id INT REFERENCES transaction(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	discount_id INT REFERENCES discount(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
