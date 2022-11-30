@@ -1,5 +1,3 @@
--- Warning: if you run this script, your "development" table will be overwritten
--- If development already exists, delete it first
 DROP DATABASE IF EXISTS development;
 
 CREATE DATABASE development;
@@ -37,13 +35,9 @@ create table product (
 	category VARCHAR(50) NOT NULL,
 	creator INT NOT NULL,
 	creation_date DATE NOT NULL,
-	supplier VARCHAR(50)
+	supplier VARCHAR(50),
+    image_path VARCHAR(750)
 );
-insert into product (sku, title, brand, summary, price, quantity, category, creator, creation_date, supplier) values ('79-114-5362', 'MX Master 3', 'Logitech', 'Ergonomic Mouse', 99.99, 61, 'Electronics', 1, '1/2/2022', 'Skinte');
-insert into product (sku, title, brand, summary, price, quantity, category, creator, creation_date, supplier) values ('16-232-7508', 'Infinity Bangle', 'Swarovski', 'Symbol of Love ', 131.16, 97, 'Jewelry', 1, '12/16/2021', 'Oyope');
-insert into product (sku, title, brand, summary, price, quantity, category, creator, creation_date, supplier) values ('28-122-9924', 'Cabernet Sauvignon', 'Hectare', 'American', 2.99, 24, 'Drinks', 1, '8/10/2022', 'Buzzster');
-insert into product (sku, title, brand, summary, price, quantity, category, creator, creation_date, supplier) values ('32-885-9424', 'Bread', 'Wonder Bread', 'Feed Your Joy. ', 2.89, 95, 'Food', 2, '7/27/2022', 'Avamm');
-insert into product (sku, title, brand, summary, price, quantity, category, creator, creation_date, supplier) values ('78-736-0229', 'Superstar', 'Adidas', 'Originally made for basketball courts in the 70s.', 67.00, 62, 'Shoes', 4, '10/17/2022', 'Roodel');
 
 create table discount (
 	id INT NOT NULL PRIMARY KEY,
