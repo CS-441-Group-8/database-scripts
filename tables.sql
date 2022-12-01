@@ -17,7 +17,7 @@ create table employee (
 	zipcode VARCHAR(50) NOT NULL,
 	password VARCHAR(64) NOT NULL,
 	hire_date DATE NOT NULL,
-	starting_amount FLOAT NOT NULL
+	starting_amount MONEY NOT NULL
 );
 insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Abner', 'Beardwell', '916-651-8952', 'abeardwell0@webs.com', '6 Dovetail Crossing', 'Sacramento', 'CA', '94237', 'TXFBV7w1Y0GI', '7/19/2022', 300.00);
 insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Gavin', 'Curness', '754-584-1871', 'gcurness1@twitpic.com', '1 Morningstar Place', 'Fort Lauderdale', 'FL', '33310', 'wVTpq9B', '12/3/2021', 300.00);
@@ -30,7 +30,7 @@ create table product (
 	title VARCHAR(50) NOT NULL,
 	brand VARCHAR(50) NOT NULL,
 	summary TEXT NOT NULL,
-	price FLOAT NOT NULL,
+	price MONEY NOT NULL,
 	quantity INT NOT NULL,
 	category VARCHAR(50) NOT NULL,
 	creator INT NOT NULL,
@@ -42,7 +42,7 @@ create table product (
 create table discount (
 	id INT NOT NULL PRIMARY KEY,
 	discount_type VARCHAR(50),
-	amount DECIMAL(3,2)
+	amount MONEY
 );
 insert into discount (id, discount_type, amount) values (1, 'Friends', 0.05);
 insert into discount (id, discount_type, amount) values (2, 'Family', 0.15);
@@ -52,9 +52,9 @@ create table transaction (
 	id BIGSERIAL NOT NULL PRIMARY KEY,
 	date VARCHAR(50) NOT NULL,
 	salesperson_id INT NOT NULL REFERENCES employee(id),
-	total DECIMAL(5,2) NOT NULL,
-	discount DECIMAL(4,2) NOT NULL,
-	final_total DECIMAL(5,2) NOT NULL,
+	total MONEY NOT NULL,
+	discount MONEY NOT NULL,
+	final_total MONEY NOT NULL,
 	payment_type VARCHAR(50) NOT NULL,
 	creditcard_type VARCHAR(64),
 	creditcard_number VARCHAR(64),
