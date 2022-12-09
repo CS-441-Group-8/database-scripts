@@ -25,6 +25,12 @@ insert into employee (first_name, last_name, phone_number, email, address, city,
 insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Bary', 'Portman', '651-250-8114', 'bportman3@simplemachines.org', '0 Summer Ridge Plaza', 'Saint Paul', 'MN', '55146', 'MjxZ6bBKq', '9/8/2022', 292.32);
 insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Gery', 'Elmes', '409-499-6540', 'gelmes4@cnet.com', '25 Carpenter Park', 'Galveston', 'TX', '77554', '428LJhxWhcB', '4/21/2022', 296.83);
 
+create table employee_config (
+	id INT NOT NULL PRIMARY KEY REFERENCES employee(id) ON DELETE CASCADE,
+	styling TEXT
+);
+insert into employee_config (id) select id from employee;
+
 create table product (
 	sku VARCHAR(50) NOT NULL PRIMARY KEY,
 	title VARCHAR(50) NOT NULL,
