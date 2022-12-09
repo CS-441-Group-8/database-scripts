@@ -56,7 +56,7 @@ insert into discount (id, discount_type, amount) values (3, 'Military', 0.10);
 create table transaction (
 	id BIGSERIAL NOT NULL PRIMARY KEY,
 	date VARCHAR(50) NOT NULL,
-	salesperson_id INT NOT NULL REFERENCES employee(id),
+	salesperson_id INT REFERENCES employee(id) ON DELETE SET NULL,
 	total MONEY NOT NULL,
 	discount MONEY NOT NULL,
 	final_total MONEY NOT NULL,
