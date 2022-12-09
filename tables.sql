@@ -17,19 +17,14 @@ create table employee (
 	zipcode VARCHAR(50) NOT NULL,
 	password VARCHAR(64) NOT NULL,
 	hire_date DATE NOT NULL,
-	starting_amount MONEY NOT NULL
+	starting_amount MONEY NOT NULL,
+	styling TEXT
 );
 insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Abner', 'Beardwell', '916-651-8952', 'abeardwell0@webs.com', '6 Dovetail Crossing', 'Sacramento', 'CA', '94237', 'TXFBV7w1Y0GI', '7/19/2022', 300.00);
 insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Gavin', 'Curness', '754-584-1871', 'gcurness1@twitpic.com', '1 Morningstar Place', 'Fort Lauderdale', 'FL', '33310', 'wVTpq9B', '12/3/2021', 300.00);
 insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Grier', 'Castellaccio', '319-376-1073', 'gcastellaccio2@github.com', '0 Pawling Street', 'Waterloo', 'IA', '50706', 'DICMpvtL0', '8/7/2022', 300.00);
 insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Bary', 'Portman', '651-250-8114', 'bportman3@simplemachines.org', '0 Summer Ridge Plaza', 'Saint Paul', 'MN', '55146', 'MjxZ6bBKq', '9/8/2022', 292.32);
 insert into employee (first_name, last_name, phone_number, email, address, city, state, zipcode, password, hire_date, starting_amount) values ('Gery', 'Elmes', '409-499-6540', 'gelmes4@cnet.com', '25 Carpenter Park', 'Galveston', 'TX', '77554', '428LJhxWhcB', '4/21/2022', 296.83);
-
-create table employee_config (
-	id INT NOT NULL PRIMARY KEY REFERENCES employee(id) ON DELETE CASCADE,
-	styling TEXT
-);
-insert into employee_config (id) select id from employee;
 
 create table product (
 	sku VARCHAR(50) NOT NULL PRIMARY KEY,
